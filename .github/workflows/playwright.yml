@@ -31,7 +31,9 @@ jobs:
         path: playwright-report/
         retention-days: 30
 
-    - name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    - name: Deploy to GitHub Pages
+    - name: Deploy to Github Pages
+      id: deployment
       uses: actions/deploy-pages@v4
+      if: always()
+      with:
+        artifact_name: playwright-report/
