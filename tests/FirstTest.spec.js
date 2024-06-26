@@ -20,7 +20,7 @@ test('test with fixture- Page', async ({page})=>{
     await expect(page).toHaveTitle("Practice Page");
 });
 
-test.only("Visual Testing", async({page})=>{
+test("Visual Testing", async({page})=>{
 
     await page.goto("https://google.com")
     expect(await page.screenshot()).toMatchSnapshot('refScreenshot.png')
