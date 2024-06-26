@@ -8,6 +8,11 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -25,3 +30,8 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
+
+    - name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    - name: Deploy to GitHub Pages
+      uses: actions/deploy-pages@v4
