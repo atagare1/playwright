@@ -31,8 +31,17 @@ jobs:
         path: playwright-report/
         retention-days: 30
 
-    - name: Deploy to Github Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
-      if: always()
-
+  deploy:
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
