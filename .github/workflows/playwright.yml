@@ -38,4 +38,5 @@ jobs:
       uses: actions/deploy-pages@v4
       if: always()
       with:
+        artifact_name: playwright-report/
         path: playwright-report/
