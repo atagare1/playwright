@@ -38,4 +38,4 @@ jobs:
       uses: actions/upload-pages-artifact@v1
       if: always()
       with:
-        artifact_name: playwright-report
+        path: playwright-report/
