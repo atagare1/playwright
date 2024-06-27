@@ -10,14 +10,17 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    outputs:
-      timestamp: ${{ steps.timestampid.outputs.timestamp }}
+
     permissions:
       contents: write
       pages: write
       id-token: write
 
     steps:
+    - name: Set a timestamp
+      id: timestampid
+      run: echo "timestamp=$(date --utc +%Y%m%d_%H%M%SZ)" >> "$GITHUB_OUTPUT"
+      
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
