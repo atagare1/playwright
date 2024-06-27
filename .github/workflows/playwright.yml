@@ -40,11 +40,11 @@ jobs:
         retention-days: 30
 
     - name: upload artifacts for gh pages
-      uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-pages-artifact@v1
       id: filename
       if: always()
       with:
-        name: gh-pages1
+        name: gh-pages
         path: playwright-report
 
 
@@ -53,7 +53,7 @@ jobs:
       uses: actions/deploy-pages@v4
       if: always()
       with:
-        artifact_name: playwright-report
+        artifact_name: gh-pages
 
 
     - name: Write URL in summary
