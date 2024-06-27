@@ -46,6 +46,7 @@ jobs:
       if: always()
       with:
         artifact_name: playwright-report/
+        github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Write URL in summary
       run: echo "### Test results (link available after 20 secs) - https://${{ github.repository_owner }}.github.io/playwright/${{ steps.timestampid.outputs.timestamp }}/" >> $GITHUB_STEP_SUMMARY
