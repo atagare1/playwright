@@ -5,13 +5,13 @@ const createOrderPayload={orders:[{country: "India", productOrderedId: "6581ca39
 const fakePayLoadOrders = { data: [], message: "No Orders" };
 let response;
  
-test.beforeAll( async () => {
+test.beforeAll('before all', async () => {
     const apiContext= await request.newContext();
     const apiUtils= new ApiUtils(apiContext,loginPayload)
     response= await apiUtils.createOrder(createOrderPayload)
 
 
-}
+})
 test('API session handling and searching orderID for order created with API', async ({browser})=> {
 
     const context= await browser.newContext();
