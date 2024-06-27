@@ -1,0 +1,1 @@
+[{"uid":"e56b3aca1283135a","name":"test with fixture- Page","time":{"start":1719510779669,"stop":1719510785699,"duration":6030},"status":"passed","severity":"normal"},{"uid":"210c7795a07129f3","name":"API session handling and searching orderID for order created with API","time":{"start":1704526197337,"stop":1704526201838,"duration":4501},"status":"passed","severity":"normal"}]
