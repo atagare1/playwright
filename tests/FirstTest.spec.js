@@ -15,7 +15,7 @@ test('First Playwright test with fixture-browser', async ({browser})=> {
 
 });
 
-test('test with fixture- Page', async ({page})=>{
+test.only('test with fixture- Page', async ({page})=>{
     await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
     await expect(page).toHaveTitle("Practice Page");
 });
