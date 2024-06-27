@@ -40,11 +40,10 @@ jobs:
 
     - name: Deploy to Github Pages
       id: deployment
-      uses: peaceiris/actions-gh-pages@v3
+      uses: actions/deploy-pages@v4
       if: always()
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: playwright-report/
-        destination_dir: ${{ steps.timestampid.outputs.timestamp }} 
+       artifact_name: gh-pahes-${{ steps.timestampid.outputs.timestamp }}
     - name: Write URL in summary
       run: echo "### Test results (link available after 20 secs) - https://${{ github.repository_owner }}.github.io/playwright/${{ steps.timestampid.outputs.timestamp }}/" >> $GITHUB_STEP_SUMMARY
