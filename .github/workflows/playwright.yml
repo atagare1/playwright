@@ -50,10 +50,10 @@ jobs:
 
     - name: Deploy to Github Pages
       id: deployment
-      uses: actions/deploy-pages@v4
+      uses: actions/deploy-pages@v1
       if: always()
       with:
-        artifact_name: gh-pages
+        artifact_name: playwright-report
 
 
     - name: Write URL in summary
