@@ -43,7 +43,7 @@ jobs:
       id: filename
       if: always()
       with:
-        name: gh-pages
+        name: gh-pages1
         path: playwright-report
 
 
@@ -52,7 +52,7 @@ jobs:
       uses: actions/deploy-pages@v4
       if: always()
       with:
-        artifact_name: gh-pages
+        artifact_name: playwright-report
 
 
     - name: Write URL in summary
