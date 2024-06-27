@@ -32,10 +32,15 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
-
+    - name: Setup Pages
+      uses: actions/configure-pages@v2
+    - name: upload artifacts1
+      uses: actions/upload-pages-artifact@v1
+      with:
+        path: playwright-report/
     - name: Deploy to Github Pages
       id: deployment
-      uses: peaceiris/actions-gh-pages@v3
+      uses: actions/deploy-pages@v1
       if: always()
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
