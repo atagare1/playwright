@@ -46,8 +46,9 @@ jobs:
         git checkout gh-pages || git checkout --orphan gh-pages
         
         # Copy the Playwright report to the gh-pages branch
-        mkdir -p reports/$(date +'%Y-%m-%d_%H-%M-%S')
-        cp -r playwright-report/* reports/$(date +'%Y-%m-%d_%H-%M-%S')/
+        timestamp=(date +'%Y-%m-%d_%H-%M-%S')
+        mkdir -p reports/$timestamp
+        cp -r playwright-report/* reports/$timestamp)/
         
         # Commit and push changes
         git add .
@@ -55,4 +56,4 @@ jobs:
         git push origin gh-pages
         
     - name: Write URL in summary
-      run: echo "### Test results- https://${{ github.repository_owner }}.github.io/playwright/reports/$(date +'%Y-%m-%d_%H-%M-%S')/index.html" >> $GITHUB_STEP_SUMMARY
+      run: echo "### Test results- https://${{ github.repository_owner }}.github.io/playwright/reports/$timestamp/index.html" >> $GITHUB_STEP_SUMMARY
