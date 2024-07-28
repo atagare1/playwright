@@ -1,3 +1,4 @@
+
 name: Playwright Tests
 
 on:
@@ -30,30 +31,31 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
-    - name: Generate Playwright reports
+    - name: Run Playwright tests
       run: npx playwright test
-
-    - name: Upload report as artifact
-      uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v1
+      if: always()
       with:
-        name: playwright-report1
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
+
+    - name: upload artifacts for gh pages
+      uses: actions/upload-pages-artifact@v1
+      id: filename
+      if: always()
+      with:
+        name: gh-pages-${{ steps.timestampid.outputs.timestamp }}
         path: playwright-report
 
-    - name: Deploy to GitHub Pages
-      run: |
-        # Create a new branch or use the existing one
-        git remote update
-        git fetch 
-        git checkout --track origin/gh-pages
-        # Move reports to the `gh-pages` branch
-      
-        cp -r playwright-report1/* docs/
 
-        # Commit and push the changes
-        git config --global user.name "github-actions"
-        git config --global user.email "github-actions@github.com"
-        git add .
-        git commit -m "Deploy Playwright reports"
-        git push origin gh-pages
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Deploy to Github Pages
+      id: deployment
+      uses: actions/deploy-pages@v1
+      if: always()
+      with:
+        artifact_name: gh-pages-${{ steps.timestampid.outputs.timestamp }}
+
+
+    - name: Write URL in summary
+      run: echo "### Test results (link available after 20 secs) - https://${{ github.repository_owner }}.github.io/playwright/${{ steps.timestampid.outputs.timestamp }}/" >> $GITHUB_STEP_SUMMARY
