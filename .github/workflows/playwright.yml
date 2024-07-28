@@ -42,7 +42,7 @@ jobs:
     - name: Deploy to GitHub Pages
       run: |
         # Create a new branch or use the existing one
-        git checkout gh-pages10
+        git checkout -b gh-pages10
         # Move reports to the `gh-pages` branch
       
         cp -r gh-pages-${{ steps.timestampid.outputs.timestamp }}/* docs/
