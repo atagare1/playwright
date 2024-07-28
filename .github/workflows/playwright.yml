@@ -31,9 +31,8 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Generate Playwright reports
-      run: |
-        npx playwright test
-        npx playwright show-report
+      run: npx playwright test
+    
     - name: Archive the report
       run: |
         ./archive-reports.sh
