@@ -42,7 +42,7 @@ jobs:
     - name: Deploy to GitHub Pages
       run: |
         # Create a new branch or use the existing one
-        git checkout -b gh-pages10
+        git checkout gh-pages
         # Move reports to the `gh-pages` branch
       
         cp -r gh-pages-${{ steps.timestampid.outputs.timestamp }}/* docs/
@@ -52,6 +52,6 @@ jobs:
         git config --global user.email "github-actions@github.com"
         git add .
         git commit -m "Deploy Playwright reports"
-        git push origin gh-pages10
+        git push origin gh-pages
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
