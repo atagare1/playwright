@@ -42,7 +42,9 @@ jobs:
     - name: Deploy to GitHub Pages
       run: |
         # Create a new branch or use the existing one
-        git checkout gh-pages
+        git remote update
+        git fetch 
+        git checkout --track origin/gh-pages
         # Move reports to the `gh-pages` branch
       
         cp -r playwright-report1/* docs/
