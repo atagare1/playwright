@@ -36,7 +36,7 @@ jobs:
     - name: Upload report as artifact
       uses: actions/upload-artifact@v3
       with:
-        name: gh-pages-${{ steps.timestampid.outputs.timestamp }}
+        name: playwright-report1
         path: playwright-report
 
     - name: Deploy to GitHub Pages
@@ -45,7 +45,7 @@ jobs:
         git checkout gh-pages
         # Move reports to the `gh-pages` branch
       
-        cp -r gh-pages-${{ steps.timestampid.outputs.timestamp }}/* docs/
+        cp -r playwright-report1/* docs/
 
         # Commit and push the changes
         git config --global user.name "github-actions"
