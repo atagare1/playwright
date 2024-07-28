@@ -43,6 +43,7 @@ jobs:
       run: |
         # Create a new branch or use the existing one
         git checkout -b gh-pages
+        git pull
 
         # Move reports to the `gh-pages` branch
         mkdir -p docs
