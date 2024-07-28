@@ -53,3 +53,6 @@ jobs:
         git add .
         git commit -m "Deploy Playwright report"
         git push origin gh-pages
+        
+    - name: Write URL in summary
+      run: echo "### Test results- https://${{ github.repository_owner }}.github.io/playwright/reports/$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_STEP_SUMMARY
