@@ -1,8 +1,9 @@
-
 name: Playwright tests with Allure reports
 
 on:
   workflow_dispatch:
+  push:
+    branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
 jobs:
@@ -50,7 +51,7 @@ jobs:
       with:
         gh_pages: gh-pages
         allure_history: allure-history
-        allure_results: build/allure-results
+        allure_results: allure-results
 
     - name: Publish test report
       uses: peaceiris/actions-gh-pages@v3
