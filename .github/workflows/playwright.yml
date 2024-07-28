@@ -32,7 +32,7 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       if: always()
       with:
         name: playwright-report
@@ -40,7 +40,7 @@ jobs:
         retention-days: 30
 
     - name: upload artifacts for gh pages
-      uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-pages-artifact@v4
       id: filename
       if: always()
       with:
@@ -50,7 +50,7 @@ jobs:
 
     - name: Deploy to Github Pages
       id: deployment
-      uses: actions/deploy-pages@v3
+      uses: actions/deploy-pages@v4
       if: always()
       with:
         artifact_name: gh-pages-${{ steps.timestampid.outputs.timestamp }}
