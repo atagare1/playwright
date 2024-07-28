@@ -32,16 +32,12 @@ jobs:
       run: npx playwright install --with-deps
     - name: Generate Playwright reports
       run: npx playwright test
-    
-    - name: Archive the report
-      run: |
-        ./archive-reports.sh
 
     - name: Upload report as artifact
       uses: actions/upload-artifact@v3
       with:
         name: playwright-reports
-        path: reports/
+        path: playwright-report
 
     - name: Deploy to GitHub Pages
       run: |
@@ -50,7 +46,7 @@ jobs:
 
         # Move reports to the `gh-pages` branch
         mkdir -p docs
-        cp -r reports/* docs/
+        cp -r playwright-report/* docs/
 
         # Commit and push the changes
         git config --global user.name "github-actions"
