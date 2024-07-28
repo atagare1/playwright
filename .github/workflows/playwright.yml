@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
+    container:
+      image: mcr.microsoft.com/playwright:v1.40.1-jammy
     permissions:
       contents: write
       pages: write
@@ -28,31 +30,28 @@ jobs:
         node-version: 20
     - name: Install dependencies
       run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Generate Playwright reports
+    - name: Run Playwright tests
       run: npx playwright test
-
-    - name: Upload report as artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: playwright-reports
-        path: playwright-report
-
+      
     - name: Deploy to GitHub Pages
       run: |
-        # Create a new branch or use the existing one
-        git checkout -b gh-pages        
+        # Configure Git
+        git config --global --add safe.directory /__w/playwright/playwright
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
         
-        # Move reports to the `gh-pages` branch
-        mkdir -p docs
-        cp -r playwright-report/* docs/
-
-        # Commit and push the changes
-        git config --global user.name "github-actions"
-        git config --global user.email "github-actions@github.com"
-        git add docs/
-        git commit -m "Deploy Playwright reports"
+        # Switch to gh-pages branch
+        git fetch origin
+        git checkout gh-pages || git checkout --orphan gh-pages
+        
+        # Copy the Playwright report to the gh-pages branch
+       
+        mkdir -p reports/${{ steps.timestampid.outputs.timestamp }}
+        cp -r playwright-report/* reports/${{ steps.timestampid.outputs.timestamp }}/
+        
+        # Commit and push changes
+        git add .
+        git commit -m "Deploy Playwright report"
         git push origin gh-pages
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Write URL in summary
+      run: echo "### Test results - https://${{ github.repository_owner }}.github.io/playwright/reports/${{ steps.timestampid.outputs.timestamp }}/index.html" >> $GITHUB_STEP_SUMMARY
