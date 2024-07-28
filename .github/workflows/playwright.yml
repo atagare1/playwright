@@ -44,6 +44,7 @@ jobs:
         # Create a new branch or use the existing one
         git checkout -b gh-pages
         git pull origin gh-pages
+        git config pull.rebase false
         
 
         # Move reports to the `gh-pages` branch
