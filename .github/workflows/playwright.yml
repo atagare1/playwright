@@ -44,7 +44,7 @@ jobs:
         # Create a new branch or use the existing one
         git checkout -b gh-pages
         # Move reports to the `gh-pages` branch
-        git pull origin gh-pages
+        git pull origin gh-pages --ff-only 
         cp -r playwright-report/* docs/
 
         # Commit and push the changes
