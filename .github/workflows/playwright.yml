@@ -33,29 +33,22 @@ jobs:
       run: npm ci
     - name: Run Playwright tests
       run: npx playwright test
-    - uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
-
-    - name: upload artifacts for gh pages
-      uses: actions/upload-pages-artifact@v3
-      id: filename
-      if: always()
-      with:
-        name: gh-pages-${{ steps.timestampid.outputs.timestamp }}
-        path: playwright-report
-
-
-    - name: Deploy to Github Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
-      if: always()
-      with:
-        artifact_name: gh-pages-${{ steps.timestampid.outputs.timestamp }}
-
-
-    - name: Write URL in summary
-      run: echo "### Test results (link available after 20 secs) - https://${{ github.repository_owner }}.github.io/playwright/${{ steps.timestampid.outputs.timestamp }}/" >> $GITHUB_STEP_SUMMARY
+      
+    - name: Deploy to GitHub Pages
+      run: |
+        # Configure Git
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        
+        # Switch to gh-pages branch
+        git fetch origin
+        git checkout gh-pages || git checkout --orphan gh-pages
+        
+        # Copy the Playwright report to the gh-pages branch
+        mkdir -p reports/$(date +'%Y-%m-%d_%H-%M-%S')
+        cp -r playwright-report/* reports/$(date +'%Y-%m-%d_%H-%M-%S')/
+        
+        # Commit and push changes
+        git add .
+        git commit -m "Deploy Playwright report"
+        git push origin gh-pages
