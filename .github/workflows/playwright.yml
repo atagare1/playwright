@@ -50,7 +50,7 @@ jobs:
         cp -r playwright-report/* reports/${{ steps.timestampid.outputs.timestamp }}/
         
         # Commit and push changes
-        git add .
+        git add reports/${{ steps.timestampid.outputs.timestamp }}
         git commit -m "Deploy Playwright report"
         git push origin gh-pages
     - name: Write URL in summary
