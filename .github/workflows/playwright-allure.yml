@@ -1,10 +1,8 @@
 
-name: Playwright Tests
+name: Playwright tests with Allure reports
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
 jobs:
