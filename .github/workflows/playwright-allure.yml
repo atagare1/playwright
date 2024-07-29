@@ -2,8 +2,8 @@ name: Playwright tests with Allure reports
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ main, master ]
+  schedule:
+    - cron: '0 * * * *'
   pull_request:
     branches: [ main, master ]
 jobs:
