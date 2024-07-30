@@ -9,18 +9,6 @@ on:
   pull_request:
     branches: [ main, master ]
 
-    inputs:
-      tenant:
-        description: 'Enter the tenant name'
-        required: true
-      test_suit_input:
-        description: 'Select the test suit to run'
-        required: true
-        default: 'test-activity-analysis'
-        type: choice
-        options:
-          - Option1
-          - Option2
 jobs:
   test:
     timeout-minutes: 60
@@ -39,10 +27,6 @@ jobs:
       id: timestampid
       run: echo "timestamp=$(date --utc +%Y%m%d_%H%M%SZ)" >> "$GITHUB_OUTPUT"
 
-    - name: Inputs received
-      run: |
-        echo ${{github.events.input.tenant}} 
-        echo ${{github.events.input.test_suit_input}}   
 
     - uses: actions/checkout@v4
 
