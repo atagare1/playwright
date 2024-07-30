@@ -51,16 +51,10 @@ jobs:
         git config --global --add safe.directory /__w/playwright/playwright
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git add .
-        git commit -m "Deploy Playwright report1"
+
         # Switch to gh-pages branch
         git fetch origin
-        git add .
-        git commit -m "Deploy Playwright report2"
         git checkout gh-pages || git checkout --orphan gh-pages
-        git add .
-        git commit -m "Deploy Playwright report"
-        git pull origin gh-pages
         # Copy the Playwright report to the gh-pages branch
        
         mkdir -p reports/${{ steps.timestampid.outputs.timestamp }}
