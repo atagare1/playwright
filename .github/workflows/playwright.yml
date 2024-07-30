@@ -15,12 +15,12 @@ on:
         required: true
       test_suit_input:
         description: 'Select the test suit to run'
-          required: true
-          default: 'test-activity-analysis'
-          type: choice
-          options:
-            - Option1
-            - Option2
+        required: true
+        default: 'test-activity-analysis'
+        type: choice
+        options:
+          - Option1
+          - Option2
 jobs:
   test:
     timeout-minutes: 60
