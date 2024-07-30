@@ -1,14 +1,7 @@
-name: Playwright Tests
+name: Playwright Tests with workflow inputs
 
 on:
   workflow_dispatch:
-  schedule:
-  - cron: '0 9 * * *'
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
-
     inputs:
       tenant:
         description: 'Enter the tenant name'
