@@ -1,9 +1,9 @@
-name: Playwright tests with Allure reports
+name: Playwright tests with Allure reports wo peaceiris
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 9 * * *'
   pull_request:
     branches: [ main, master ]
 jobs:
@@ -45,25 +45,18 @@ jobs:
         allure_history: allure-history
         allure_results: allure-results
 
+    - name: Setup Pages
+      uses: actions/configure-pages@v3
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        # Upload entire repository
+        path: allure-history
+
     - name: Deploy to GitHub Pages
-      run: |
-        # Configure Git
-        git config --global --add safe.directory /__w/playwright/playwright
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        
-        # Switch to gh-pages branch
-        git fetch origin
-        git checkout gh-pages || git checkout --orphan gh-pages
-        
-        # Copy the Playwright report to the gh-pages branch
-       
-        mkdir -p reports/${{ steps.timestampid.outputs.timestamp }}
-        cp -r allure-history/* reports/${{ steps.timestampid.outputs.timestamp }}/
-        
-        # Commit and push changes
-        git add reports/${{ steps.timestampid.outputs.timestamp }}
-        git commit -m "Deploy Playwright report"
-        git push origin gh-pages
+      id: deployment
+      uses: actions/deploy-pages@v3
+
     - name: Write URL in summary
       run: echo "### Test results - https://${{ github.repository_owner }}.github.io/playwright/reports/${{ steps.timestampid.outputs.timestamp }}/index.html" >> $GITHUB_STEP_SUMMARY

@@ -3,7 +3,7 @@ name: Playwright tests with Allure reports
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 11 * * *'
   pull_request:
     branches: [ main, master ]
 jobs:
