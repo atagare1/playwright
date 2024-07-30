@@ -33,8 +33,8 @@ module.exports = defineConfig({
     //trace: 'on-first-retry',
     browserName:'chromium',
     screenshot: 'on',
-    trace:'retain-on-failure',
-    video:'retain-on-failure'
+    trace:'on',
+    video:'on'
   },
 
   

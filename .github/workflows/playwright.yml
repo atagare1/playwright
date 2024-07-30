@@ -2,10 +2,25 @@ name: Playwright Tests
 
 on:
   workflow_dispatch:
+  schedule:
+  - cron: '0 9 * * *'
   push:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+
+    inputs:
+      tenant:
+        description: 'Enter the tenant name'
+        required: true
+      test_suit_input:
+        description: 'Select the test suit to run'
+          required: true
+          default: 'test-activity-analysis'
+          type: choice
+          options:
+            - Option1
+            - Option2
 jobs:
   test:
     timeout-minutes: 60
@@ -23,13 +38,20 @@ jobs:
     - name: Set a timestamp
       id: timestampid
       run: echo "timestamp=$(date --utc +%Y%m%d_%H%M%SZ)" >> "$GITHUB_OUTPUT"
-      
+
+    - name: Inputs received
+      run: |
+        echo ${{github.events.input.tenant}} 
+        echo ${{github.events.input.test_suit_input}}   
+
     - uses: actions/checkout@v4
+
     - uses: actions/setup-node@v4
       with:
         node-version: 20
     - name: Install dependencies
       run: npm ci
+
     - name: Run Playwright tests
       run: npx playwright test
       
