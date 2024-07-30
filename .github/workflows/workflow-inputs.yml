@@ -1,0 +1,16 @@
+    inputs:
+      environment:
+        description: 'Select the environment'
+        required: true
+        type: environment
+      customer:
+        description: 'Enter the customer name'
+        required: true
+      test_suit_input:
+        description: 'Select the test suit to run'
+        required: true
+        default: 'test-activity-analysis'
+        type: choice
+        options:
+          - test-activity-analysis
+          - run-smoke-tests

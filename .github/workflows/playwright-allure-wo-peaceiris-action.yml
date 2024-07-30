@@ -1,4 +1,4 @@
-name: Playwright Tests
+name: Playwright Tests wo 
 
 on:
   workflow_dispatch:
@@ -44,7 +44,6 @@ jobs:
         gh_pages: gh-pages
         allure_history: allure-history
         allure_results: allure-results
-
     - name: Deploy to GitHub Pages
       run: |
         # Configure Git
@@ -64,4 +63,4 @@ jobs:
         git add .
         git commit -m "Deploy Playwright report"
         git push origin gh-pages
-    
+
