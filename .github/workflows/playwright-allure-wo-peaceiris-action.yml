@@ -59,7 +59,7 @@ jobs:
         # Copy the Playwright report to the gh-pages branch
        
         mkdir -p reports/${{ steps.timestampid.outputs.timestamp }}
-        cp -r playwright-report/* reports/${{ steps.timestampid.outputs.timestamp }}/
+        cp -r allure-report/* reports/${{ steps.timestampid.outputs.timestamp }}/
         
         # Commit and push changes
         git add reports/${{ steps.timestampid.outputs.timestamp }}
