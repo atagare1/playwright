@@ -1,6 +1,6 @@
 const {test,expect} = require('@playwright/test');
 
-test('First Playwright test with fixture-browser', async ({browser})=> {
+test.only('First Playwright test with fixture-browser', async ({browser})=> {
     const context= await browser.newContext();
     const page= await context.newPage();
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
@@ -15,7 +15,7 @@ test('First Playwright test with fixture-browser', async ({browser})=> {
 
 });
 
-test.only('test with fixture- Page', async ({page})=>{
+test('test with fixture- Page', async ({page})=>{
     await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
     await expect(page).toHaveTitle("Practice Page");
 });

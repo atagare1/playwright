@@ -12,7 +12,6 @@ test('First Playwright test with fixture-browser', async ({browser})=> {
     page.on('request', request=> console.log(request.url()));
     page.on('response', response=>console.log(response.status()));
     await page.waitForLoadState('networkidle');
-    //console.log(await page.locator('.card-body h5 b').first().textContent());
     const products=  page.locator('.card-body');
 
 

@@ -12,7 +12,7 @@ test.beforeAll('before all', async () => {
 
 
 })
-test('API session handling and searching orderID for order created with API', async ({browser})=> {
+test.only('API session handling and searching orderID for order created with API', async ({browser})=> {
 
     const context= await browser.newContext();
     const page= await context.newPage();
