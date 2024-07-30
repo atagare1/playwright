@@ -34,8 +34,8 @@ jobs:
 
     - name: Inputs received
       run: |
-        echo ${{github.events.input.tenant}} 
-        echo ${{github.events.input.test_suit_input}}   
+        echo ${{github.events.inputs.tenant}} 
+        echo ${{github.events.inputs.test_suit_input}}   
 
     - uses: actions/checkout@v4
 
