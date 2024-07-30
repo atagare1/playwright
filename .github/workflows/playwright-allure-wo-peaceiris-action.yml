@@ -1,15 +1,16 @@
-name: Playwright Tests wo pieceiris action
+name: Playwright tests with Allure reports wo peaceiris
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 9 * * *'
+  pull_request:
+    branches: [ main, master ]
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-    container:
-      image: mcr.microsoft.com/playwright:v1.40.1-jammy
+
     permissions:
       contents: write
       pages: write
@@ -19,13 +20,20 @@ jobs:
     - name: Set a timestamp
       id: timestampid
       run: echo "timestamp=$(date --utc +%Y%m%d_%H%M%SZ)" >> "$GITHUB_OUTPUT"
-      
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: zulu
+        java-version: 17 
+             
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
         node-version: 20
     - name: Install dependencies
       run: npm ci
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test
 
@@ -51,10 +59,9 @@ jobs:
         # Copy the Playwright report to the gh-pages branch
        
         mkdir -p reports/${{ steps.timestampid.outputs.timestamp }}
-        cp -r allure-history/* reports/${{ steps.timestampid.outputs.timestamp }}/
+        cp -r playwright-report/* reports/${{ steps.timestampid.outputs.timestamp }}/
         
         # Commit and push changes
         git add reports/${{ steps.timestampid.outputs.timestamp }}
         git commit -m "Deploy Playwright report"
         git push origin gh-pages
-    
