@@ -55,9 +55,9 @@ jobs:
         # Switch to gh-pages branch
 
         git fetch origin
-        git checkout gh-pages || git checkout --orphan gh-pages
-        git stash
-        git pull origin gh-pages
+        git checkout origin/gh-pages || git checkout --orphan gh-pages
+  
+        git pull origin origin/gh-pages
         # Copy the Playwright report to the gh-pages branch
        
         mkdir -p reports/${{ steps.timestampid.outputs.timestamp }}
