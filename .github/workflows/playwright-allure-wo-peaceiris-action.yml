@@ -51,9 +51,7 @@ jobs:
         git config --global --add safe.directory /__w/playwright/playwright
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-
-        git pull origin
+        
         # Switch to gh-pages branch
         git fetch origin
         git checkout gh-pages || git checkout --orphan gh-pages
@@ -61,10 +59,11 @@ jobs:
         # Copy the Playwright report to the gh-pages branch
        
         mkdir -p reports/${{ steps.timestampid.outputs.timestamp }}
-        cp -r allure-report/* reports/${{ steps.timestampid.outputs.timestamp }}/
+        cp -r playwright-report/* reports/${{ steps.timestampid.outputs.timestamp }}/
         
         # Commit and push changes
         git add reports/${{ steps.timestampid.outputs.timestamp }}
         git commit -m "Deploy Playwright report"
-        git push -f origin gh-pages
-
+        git push origin gh-pages
+    - name: Write URL in summary
+      run: echo "### Test results - https://${{ github.repository_owner }}.github.io/playwright/reports/${{ steps.timestampid.outputs.timestamp }}/index.html" >> $GITHUB_STEP_SUMMARY
