@@ -48,19 +48,11 @@ jobs:
     - name: Setup Pages
       uses: actions/configure-pages@v3
 
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        # Upload entire repository
-        name: demoReport
-        path: allure-history
-
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v3
       with:
-        artifact_name: demoReport
-        id-token: write
+        artifact_name: playwright-report
 
     - name: Write URL in summary
       run: echo "### Test results - https://${{ github.repository_owner }}.github.io/playwright/reports/${{ steps.timestampid.outputs.timestamp }}/index.html" >> $GITHUB_STEP_SUMMARY
