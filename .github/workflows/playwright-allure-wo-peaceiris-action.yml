@@ -1,16 +1,19 @@
-name: Playwright tests with Allure reports wo peaceiris
+name: Playwright Tests
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 9 * * *'
+  push:
+    branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-
+    environment:
+      name: github-pages
+    container:
+      image: mcr.microsoft.com/playwright:v1.40.1-jammy
     permissions:
       contents: write
       pages: write
@@ -20,22 +23,23 @@ jobs:
     - name: Set a timestamp
       id: timestampid
       run: echo "timestamp=$(date --utc +%Y%m%d_%H%M%SZ)" >> "$GITHUB_OUTPUT"
-    - name: Set up JDK
-      uses: actions/setup-java@v3
-      with:
-        distribution: zulu
-        java-version: 17 
-             
+      
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
         node-version: 20
     - name: Install dependencies
       run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test
+
+    - name: Load test report history
+      uses: actions/checkout@v3
+      if: always()
+      continue-on-error: true
+      with:
+        ref: gh-pages
+        path: gh-pages
 
     - name: Build test report
       uses: simple-elf/allure-report-action@v1.7
@@ -45,18 +49,24 @@ jobs:
         allure_history: allure-history
         allure_results: allure-results
 
-    - name: Setup Pages
-      uses: actions/configure-pages@v3
-
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        # Upload entire repository
-        path: allure-history
-
     - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v3
-
-    - name: Write URL in summary
-      run: echo "### Test results - https://${{ github.repository_owner }}.github.io/playwright/reports/${{ steps.timestampid.outputs.timestamp }}/index.html" >> $GITHUB_STEP_SUMMARY
+      run: |
+        # Configure Git
+        git config --global --add safe.directory /__w/playwright/playwright
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        
+        # Switch to gh-pages branch
+        git pull origin gh-pages
+        git checkout gh-pages || git checkout --orphan gh-pages
+        
+        # Copy the Playwright report to the gh-pages branch
+       
+        mkdir -p reports/${{ steps.timestampid.outputs.timestamp }}
+        cp -r allure-history/* reports/${{ steps.timestampid.outputs.timestamp }}/
+        
+        # Commit and push changes
+        git add reports/${{ steps.timestampid.outputs.timestamp }}
+        git commit -m "Deploy Playwright report"
+        git push origin gh-pages
+    
