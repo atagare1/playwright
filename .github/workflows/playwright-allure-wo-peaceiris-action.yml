@@ -47,14 +47,14 @@ jobs:
         git pull origin
         # Switch to gh-pages branch
         git checkout gh-pages || git checkout --orphan gh-pages
-        
+        git pull origin gh-pages
         # Copy the Playwright report to the gh-pages branch
        
-        #mkdir -p reports/${{ steps.timestampid.outputs.timestamp }}
-        #cp -r allure-report/* reports/${{ steps.timestampid.outputs.timestamp }}/
+        mkdir -p reports/${{ steps.timestampid.outputs.timestamp }}
+        cp -r allure-report/* reports/${{ steps.timestampid.outputs.timestamp }}/
         
         # Commit and push changes
         git add .
         git commit -m "Deploy Playwright report"
-        git push origin gh-pages
+        git push -f origin gh-pages
 
