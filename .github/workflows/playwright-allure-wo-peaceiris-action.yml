@@ -45,7 +45,7 @@ jobs:
         allure_history: allure-history
         allure_results: allure-results
 
-   - name: Deploy to GitHub Pages
+    - name: Deploy to GitHub Pages
       run: |
         # Configure Git
         git config --global --add safe.directory /__w/playwright/playwright
