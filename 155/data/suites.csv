@@ -1,0 +1,4 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Tue Dec 31 11:08:34 GMT 2024","Tue Dec 31 11:08:36 GMT 2024","1566","","FirstTest.spec.js","","","","First Playwright test with fixture-browser",""
+"passed","Sat Jan 06 07:29:57 GMT 2024","Sat Jan 06 07:30:01 GMT 2024","4501","","APISessionHandlingRefactored.spec.js","","","","API session handling and searching orderID for order created with API",""
+"failed","Tue Dec 31 11:08:32 GMT 2024","Tue Dec 31 11:08:34 GMT 2024","1603","","APiIntercept.spec.js","","","","API session handling and searching orderID for order created with API",""
